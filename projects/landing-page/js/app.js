@@ -23,40 +23,134 @@
  * 
 */
 
+let sections = document.querySelectorAll("[data-nav]");
+let navbar = document.getElementById("navbar__list");
+let section = document.getElementsByClassName("landing__container");
+let h2 = document.getElementsByTagName("h2");
+let navLinks = document.getElementsByClassName("navbar__link");
 
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
+/* creates li and a element, adds link to sections and styling class to a element*/
+
+function createNav()
+{
+    let count = 1;
+    for(let i = 0; i < sections.length; i++)
+    {
+        let li = document.createElement("li");
+        let a = document.createElement("a");
+        a.classList.add("navbar__link");
+        //a.setAttribute("href", `#section${count}`);
+        a.innerHTML = `Section ${count}`;
+        li.appendChild(a);
+        navbar.append(li);
+        count += 1;
+    }
+}
+
+/* helperfunction to check if an element is in viewport */
+
+
+function isInViewPort(element)
+{
+    const rect = element.getBoundingClientRect();
+    return(
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );   
+}
 
 
 
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
+/* checks if section is in viewport, if so section recieves "your-active-class" and nav link revieves "active__section" CSS class
+ * otherwise both of them are removed from the element */ 
 
-// build the nav
+document.addEventListener("scroll", function()
+    {
+        
+        for(let i = 0; i < section.length; i++)
+        {
+            if(screen.width < 450)
+            {
+                if(isInViewPort(h2[i]))
+                {
+                    sections[i].classList.add("your-active-class");
+                    navLinks[i].classList.add("active__section");
+                }
+
+                else
+                {
+                    sections[i].classList.remove("your-active-class");
+                    navLinks[i].classList.remove("active__section");
+                }
+            }
+
+            else if(isInViewPort(section[i]))
+            {
+                sections[i].classList.add("your-active-class");
+                navLinks[i].classList.add("active__section");
+            }
+
+            else
+            {
+                sections[i].classList.remove("your-active-class");
+                navLinks[i].classList.remove("active__section");
+            }
+        }
+       
+    })
 
 
-// Add class 'active' to section when near top of viewport
 
+createNav();
 
-// Scroll to anchor ID using scrollTO event
+//creates smooth scrolling behaviour when nav link is clicked
 
+const nav = document.getElementsByClassName("page__header")[0];
 
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
+for(let i = 0; i < navLinks.length; i++)
+{
 
-// Build menu 
+    navLinks[i].addEventListener("click", function()
+    {
+        for(let j = 0; j < navLinks.length; j++)
+        {
+            section[j].classList.remove("scrolling__fix");
+        }
 
-// Scroll to section on link click
+        if(screen.width < 450)
+        {
+            // used so navbar doesnt hide heading of section
+            section[i].classList.add("scrolling__fix");
+            section[i].scrollIntoView({block: "start", behavior: "smooth"});
 
-// Set sections as active
+        }
+        else
+        {
+            section[i].scrollIntoView({behavior: "smooth"});
+        }
 
+    });
+}
+
+/* hides nav if the user is scrolling down, shows again when user is scrolling up
+ * initialY is undefined, because otherwise the navbar would be invisible when the website is reloaded in certain spots
+ */
+let initialY;
+window.addEventListener("scroll", function()
+{
+    let yOffset = window.pageYOffset;
+
+    if(yOffset > initialY)
+    {
+        nav.classList.add("hidden__nav");
+    }
+    else
+    {
+        nav.classList.remove("hidden__nav");
+    }
+
+    initialY = yOffset;
+});
 
