@@ -1,16 +1,16 @@
 /**
- * 
+ *
  * Manipulating the DOM exercise.
  * Exercise programmatically builds navigation,
  * scrolls to anchors from navigation,
  * and highlights section in viewport upon scrolling.
- * 
+ *
  * Dependencies: None
- * 
+ *
  * JS Version: ES2015/ES6
- * 
+ *
  * JS Standard: ESlint
- * 
+ *
 */
 
 /**
@@ -20,7 +20,7 @@
 
 /**
  * Define Global Variables
- * 
+ *
 */
 
 let sections = document.querySelectorAll("[data-nav]");
@@ -55,18 +55,18 @@ function isInViewPort(element)
     const rect = element.getBoundingClientRect();
     return(
         rect.top >= 0 &&
-        rect.bottom <= window.innerHeight 
-    );   
+        rect.bottom <= window.innerHeight
+    );
 }
 
 
 
 /* checks if section is in viewport, if so section recieves "your-active-class" and nav link revieves "active__section" CSS class
- * otherwise both of them are removed from the element */ 
+ * otherwise both of them are removed from the element */
 
 document.addEventListener("scroll", function()
     {
-        
+
         for(let i = 0; i < section.length; i++)
         {
             if(screen.width < 450)
@@ -96,7 +96,7 @@ document.addEventListener("scroll", function()
                 navLinks[i].classList.remove("active__section");
             }
         }
-       
+
     })
 
 
@@ -118,7 +118,7 @@ for(let i = 0; i < navLinks.length; i++)
         }
 
         section[i].classList.add("scrolling__fix");
-        section[i].scrollIntoView({block: "start", behavior: "smooth"});        
+        section[i].scrollIntoView({block: "start", behavior: "smooth"});
         /*
         if(screen.width < 450)
         {
