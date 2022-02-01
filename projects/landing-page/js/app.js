@@ -117,6 +117,9 @@ for(let i = 0; i < navLinks.length; i++)
             section[j].classList.remove("scrolling__fix");
         }
 
+        section[i].classList.add("scrolling__fix");
+        section[i].scrollIntoView({block: "start", behavior: "smooth"});        
+        /*
         if(screen.width < 450)
         {
             // used so navbar doesnt hide heading of section
@@ -126,9 +129,10 @@ for(let i = 0; i < navLinks.length; i++)
         }
         else
         {
+            section[i].classList.add("scrolling__fix");
             section[i].scrollIntoView({behavior: "smooth"});
         }
-
+        */
     });
 }
 
